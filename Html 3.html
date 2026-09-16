@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE GRAND HANZI ✦ แฟลชการ์ดคำศัพท์จีน</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+Thai:wght@300;400;600&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold1:#f7e7a6; --gold2:#d4af37; --gold3:#9c7a20; --gold4:#6b5214;
+  --ink:#0a0a10; --ink2:#12121c; --ink3:#1b1b2a;
+  --ok:#57d9a3; --no:#ff7b7b;
+  --paper:#f4efe2;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:"Noto Sans Thai",sans-serif;
+  background:radial-gradient(1200px 800px at 50% -10%,#232338 0%,#0e0e16 45%,#06060a 100%);
+  color:var(--paper);min-height:100vh;overflow-x:hidden;
+  display:flex;flex-direction:column;align-items:center;
+  padding:40px 18px 70px;position:relative;
+}
+/* ---------- อนุภาคทองลอย ---------- */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.stars i{
+  position:absolute;width:3px;height:3px;border-radius:50%;
+  background:var(--gold1);opacity:.5;
+  animation:float linear infinite;
+  box-shadow:0 0 8px 2px rgba(212,175,55,.55);
+}
+@keyframes float{
+  0%{transform:translateY(105vh) scale(.4);opacity:0}
+  10%{opacity:.75}
+  90%{opacity:.5}
+  100%{transform:translateY(-12vh) scale(1.2);opacity:0}
+}
+/* ---------- กรอบทองรอบหน้าจอ ---------- */
+.frame{position:fixed;inset:14px;border:1px solid rgba(212,175,55,.28);pointer-events:none;z-index:1}
+.frame::before,.frame::after{
+  content:"";position:absolute;width:48px;height:48px;
+  border:2px solid var(--gold2);
+}
+.frame::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.frame::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+
+.wrap{width:100%;max-width:700px;position:relative;z-index:2}
+
+/* ---------- หัวเรื่อง ---------- */
+header{text-align:center;margin-bottom:30px}
+.crest{font-size:26px;color:var(--gold2);letter-spacing:10px;margin-bottom:8px;
+  text-shadow:0 0 22px rgba(212,175,55,.6)}
+h1{
+  font-family:"Cinzel",serif;font-size:clamp(26px,5.2vw,44px);font-weight:700;
+  letter-spacing:5px;
+  background:linear-gradient(180deg,#fff8dd 0%,var(--gold1) 25%,var(--gold2) 55%,var(--gold3) 80%,#fdf3c8 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 3px 14px rgba(212,175,55,.35));
+}
+.cn-title{font-family:"Noto Serif SC",serif;font-size:15px;letter-spacing:12px;color:rgba(212,175,55,.85);margin-top:10px}
+.rule{display:flex;align-items:center;gap:14px;margin:18px auto 0;max-width:440px}
+.rule span{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.rule b{color:var(--gold2);font-size:12px;letter-spacing:3px;font-family:"Cinzel",serif}
+
+/* ---------- แถบความคืบหน้า ---------- */
+.progress{margin:26px 0 8px;height:6px;border-radius:99px;background:rgba(255,255,255,.07);
+  border:1px solid rgba(212,175,55,.25);overflow:hidden;position:relative}
+.progress i{display:block;height:100%;width:0;
+  background:linear-gradient(90deg,var(--gold3),var(--gold1),var(--gold2));
+  box-shadow:0 0 16px rgba(212,175,55,.8);transition:width .45s cubic-bezier(.4,.2,.2,1)}
+.meta{display:flex;justify-content:space-between;font-family:"Cormorant Garamond",serif;
+  font-size:14px;letter-spacing:2px;color:rgba(244,239,226,.62);margin-bottom:24px}
+.meta b{color:var(--gold1);font-weight:600}
+
+/* ---------- การ์ด ---------- */
+.scene{perspective:2000px}
+.card{position:relative;width:100%;min-height:360px;transform-style:preserve-3d;
+  transition:transform .85s cubic-bezier(.22,.9,.25,1);cursor:pointer}
+.card.flip{transform:rotateY(180deg)}
+.face{
+  position:absolute;inset:0;backface-visibility:hidden;border-radius:6px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:52px 34px;text-align:center;overflow:hidden;
+  background:linear-gradient(160deg,#1d1d2c 0%,#14141f 50%,#0d0d15 100%);
+  border:1px solid rgba(212,175,55,.42);
+  box-shadow:0 30px 70px -20px rgba(0,0,0,.9),
+             inset 0 0 70px rgba(212,175,55,.06),
+             0 0 0 1px rgba(212,175,55,.12);
+}
+.face::before{ /* กรอบทองชั้นใน */
+  content:"";position:absolute;inset:14px;border:1px solid rgba(212,175,55,.32);
+  border-radius:3px;pointer-events:none;
+}
+.face::after{ /* ประกายแสงกวาด */
+  content:"";position:absolute;top:-60%;left:-60%;width:220%;height:220%;
+  background:linear-gradient(115deg,transparent 42%,rgba(255,244,200,.14) 50%,transparent 58%);
+  animation:sheen 6s ease-in-out infinite;pointer-events:none;
+}
+@keyframes sheen{0%,100%{transform:translateX(-35%)}50%{transform:translateX(35%)}}
+.corner{position:absolute;width:26px;height:26px;border:1.5px solid var(--gold2);opacity:.85}
+.c1{top:22px;left:22px;border-right:0;border-bottom:0}
+.c2{top:22px;right:22px;border-left:0;border-bottom:0}
+.c3{bottom:22px;left:22px;border-right:0;border-top:0}
+.c4{bottom:22px;right:22px;border-left:0;border-top:0}
+
+.back{transform:rotateY(180deg);
+  background:linear-gradient(160deg,#241d10 0%,#171208 55%,#0c0a06 100%);
+}
+.seal{position:absolute;top:26px;right:60px;width:40px;height:40px;border-radius:3px;
+  background:linear-gradient(145deg,#a8321f,#7b1f12);color:#ffe9c9;
+  font-family:"Noto Serif SC",serif;font-size:11px;line-height:1.05;
+  display:flex;align-items:center;justify-content:center;letter-spacing:0;
+  box-shadow:0 4px 14px rgba(0,0,0,.6);opacity:.9}
+
+.label{font-family:"Cinzel",serif;font-size:10px;letter-spacing:5px;
+  color:rgba(212,175,55,.72);margin-bottom:22px}
+.pinyin{
+  font-family:"Cormorant Garamond",serif;font-size:clamp(36px,7vw,56px);font-weight:600;
+  letter-spacing:2px;line-height:1.15;
+  background:linear-gradient(180deg,#fffaea,var(--gold1) 45%,var(--gold2));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 34px rgba(212,175,55,.25);
+}
+.divider{width:110px;height:1px;margin:24px 0 20px;
+  background:linear-gradient(90deg,transparent,var(--gold2),transparent);position:relative}
+.divider::after{content:"◆";position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  color:var(--gold2);font-size:9px;background:transparent}
+.thai{font-size:17px;font-weight:300;line-height:1.85;color:rgba(244,239,226,.9);max-width:440px}
+.hanzi{
+  font-family:"Noto Serif SC",serif;font-weight:900;
+  font-size:clamp(76px,17vw,120px);letter-spacing:10px;line-height:1.12;
+  background:linear-gradient(180deg,#fffdf2 0%,var(--gold1) 30%,var(--gold2) 62%,#b48c25 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 6px 26px rgba(212,175,55,.45));
+}
+.hanzi-py{font-family:"Cormorant Garamond",serif;font-size:19px;letter-spacing:4px;
+  color:rgba(212,175,55,.88);margin-top:14px;font-style:italic}
+.hint{position:absolute;bottom:26px;font-size:10.5px;letter-spacing:3px;
+  color:rgba(244,239,226,.38);font-family:"Cinzel",serif}
+
+/* ---------- ปุ่ม ---------- */
+.actions{display:flex;gap:16px;margin-top:30px}
+.btn{
+  flex:1;padding:17px 12px;border:1px solid rgba(212,175,55,.45);border-radius:4px;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.25));
+  color:var(--paper);font-family:"Cinzel",serif;font-size:12.5px;letter-spacing:3px;
+  cursor:pointer;position:relative;overflow:hidden;transition:.28s;
+  text-transform:uppercase;
+}
+.btn small{display:block;font-family:"Noto Sans Thai";font-size:12px;letter-spacing:.5px;
+  margin-top:5px;opacity:.72;text-transform:none}
+.btn:hover{transform:translateY(-3px);box-shadow:0 14px 34px -12px rgba(212,175,55,.5)}
+.btn.no{border-color:rgba(255,123,123,.5);color:#ffd7d7}
+.btn.no:hover{background:linear-gradient(180deg,rgba(255,123,123,.18),rgba(0,0,0,.3))}
+.btn.ok{border-color:rgba(87,217,163,.5);color:#d7fff0}
+.btn.ok:hover{background:linear-gradient(180deg,rgba(87,217,163,.18),rgba(0,0,0,.3))}
+.btn.gold{margin-top:14px;width:100%;flex:none;color:var(--gold1)}
+.btn.gold:hover{background:linear-gradient(180deg,rgba(212,175,55,.2),rgba(0,0,0,.3))}
+.btn:disabled{opacity:.28;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ---------- สถิติ ---------- */
+.stats{display:flex;gap:14px;margin-top:30px}
+.stat{flex:1;padding:20px 10px;text-align:center;border-radius:4px;
+  border:1px solid rgba(212,175,55,.25);
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(0,0,0,.28));
+  position:relative;overflow:hidden}
+.stat b{display:block;font-family:"Cinzel",serif;font-size:30px;font-weight:700;line-height:1}
+.stat small{display:block;margin-top:8px;font-size:11px;letter-spacing:2.5px;
+  color:rgba(244,239,226,.52);font-family:"Cinzel",serif}
+.stat .th{display:block;font-size:11.5px;color:rgba(244,239,226,.62);margin-top:3px}
+
+/* ---------- หน้าสรุป ---------- */
+.done{
+  border:1px solid rgba(212,175,55,.42);border-radius:6px;padding:46px 30px;text-align:center;
+  background:linear-gradient(160deg,#1e1a12 0%,#14110c 55%,#0a0906 100%);
+  box-shadow:0 30px 80px -24px rgba(0,0,0,.9),inset 0 0 90px rgba(212,175,55,.07);
+  position:relative;animation:rise .7s cubic-bezier(.2,.9,.25,1)
+}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.done .crown{font-size:40px;color:var(--gold2);text-shadow:0 0 30px rgba(212,175,55,.65)}
+.done h2{font-family:"Cinzel",serif;font-size:26px;letter-spacing:4px;margin:14px 0 6px;
+  background:linear-gradient(180deg,#fff8dd,var(--gold1) 40%,var(--gold2));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.done .zh{font-family:"Noto Serif SC",serif;letter-spacing:8px;color:rgba(212,175,55,.8);font-size:14px}
+.score{font-family:"Cinzel",serif;font-size:52px;margin:22px 0 4px;color:var(--gold1);
+  text-shadow:0 0 34px rgba(212,175,55,.4)}
+.score small{font-size:17px;color:rgba(244,239,226,.5)}
+.grade{font-family:"Cinzel",serif;letter-spacing:6px;font-size:14px;color:var(--gold2);margin-bottom:26px}
+
+.sect{text-align:left;margin-top:26px}
+.sect h3{font-family:"Cinzel",serif;font-size:12px;letter-spacing:4px;margin-bottom:12px;
+  display:flex;align-items:center;gap:12px}
+.sect h3::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,currentColor,transparent);opacity:.45}
+.list{max-height:250px;overflow:auto;padding-right:6px}
+.list::-webkit-scrollbar{width:5px}
+.list::-webkit-scrollbar-thumb{background:rgba(212,175,55,.4);border-radius:9px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:11px 12px;margin-bottom:6px;border-radius:3px;
+  background:rgba(255,255,255,.035);border-left:2px solid rgba(212,175,55,.5)}
+.row.bad{border-left-color:rgba(255,123,123,.65)}
+.row.good{border-left-color:rgba(87,217,163,.65)}
+.row .zh{font-family:"Noto Serif SC",serif;font-size:20px;color:var(--gold1);letter-spacing:2px}
+.row .py{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:13px;
+  color:rgba(212,175,55,.75);margin-left:8px}
+.row .th{font-size:12.5px;color:rgba(244,239,226,.62);text-align:right;max-width:52%}
+.empty{padding:14px;font-size:13px;color:rgba(244,239,226,.45);text-align:center}
+.hide{display:none}
+footer{margin-top:34px;text-align:center;font-family:"Cinzel",serif;font-size:10px;
+  letter-spacing:4px;color:rgba(212,175,55,.42)}
+@media(max-width:520px){
+  .face{padding:44px 22px}.thai{font-size:15.5px}.seal{right:44px}
+}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div class="frame"></div>
+
+<div class="wrap">
+  <header>
+    <div class="crest">❧ ✦ ❧</div>
+    <h1>THE GRAND HANZI</h1>
+    <div class="cn-title">漢字寶典</div>
+    <div class="rule"><span></span><b>MASTER COLLECTION</b><span></span></div>
+  </header>
+
+  <!-- โหมดเรียน -->
+  <section id="study">
+    <div class="progress"><i id="bar"></i></div>
+    <div class="meta">
+      <div>CARD <b id="count">0 / 0</b></div>
+      <div>ROUND <b id="round">I</b></div>
+    </div>
+
+    <div class="scene">
+      <div class="card" id="card" onclick="flip()">
+        <div class="face front">
+          <span class="corner c1"></span><span class="corner c2"></span>
+          <span class="corner c3"></span><span class="corner c4"></span>
+          <div class="label">PINYIN &nbsp;·&nbsp; MEANING</div>
+          <div class="pinyin" id="pinyin"></div>
+          <div class="divider"></div>
+          <div class="thai" id="thai"></div>
+          <div class="hint">CLICK &nbsp;·&nbsp; SPACE &nbsp;·&nbsp; เพื่อเปิดคำตอบ</div>
+        </div>
+        <div class="face back">
+          <span class="corner c1"></span><span class="corner c2"></span>
+          <span class="corner c3"></span><span class="corner c4"></span>
+          <div class="seal">漢字</div>
+          <div class="label">CHINESE CHARACTER</div>
+          <div class="hanzi" id="hanzi"></div>
+          <div class="hanzi-py" id="hanziPy"></div>
+          <div class="hint">1 = จำไม่ได้ &nbsp;·&nbsp; 2 = จำได้</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn no" onclick="mark(false)">Forgot<small>ยังจำไม่ได้</small></button>
+      <button class="btn ok" onclick="mark(true)">Mastered<small>จำได้แล้ว</small></button>
+    </div>
+    <button class="btn gold" onclick="restart()">↻ Shuffle &amp; Restart<small>สลับไพ่แล้วเริ่มใหม่ทั้งชุด</small></button>
+
+    <div class="stats">
+      <div class="stat"><b style="color:var(--ok)" id="sOk">0</b><small>MASTERED</small><span class="th">จำได้</span></div>
+      <div class="stat"><b style="color:var(--no)" id="sNo">0</b><small>REVIEW</small><span class="th">จำไม่ได้</span></div>
+      <div class="stat"><b style="color:var(--gold1)" id="sLeft">0</b><small>REMAINING</small><span class="th">เหลือ</span></div>
+    </div>
+  </section>
+
+  <!-- หน้าสรุป -->
+  <section id="finish" class="done hide"></section>
+
+  <footer>✦ ZHŌNGWÉN FLASHCARD ATELIER ✦</footer>
+</div>
+
+<script>
+const DATA=[
+["薄弱","bóruò","อ่อนแอ, เปราะบาง"],
+["软弱","ruǎnruò","อ่อนแอ, อ่อนปวกเปียก"],
+["衰弱","shuāiruò","อ่อนแอ, อ่อนกำลัง"],
+["盐","yán","เกลือ"],
+["竞赛","jìngsài","การแข่งขัน, แข่งขัน"],
+["代替","dàitì","แทนที่"],
+["产量","chǎnliàng","ผลผลิต, ปริมาณการผลิต"],
+["大量","dàliàng","จํานวนมาก, มากมาย"],
+["力量","lìliàng","พลัง, แรง, กำลัง"],
+["商量","shāngliang","ปรึกษา, หารือ, พูดคุย"],
+["数量","shùliàng","จํานวน, ปริมาณ"],
+["质量","zhìliàng","คุณภาพ"],
+["重量","zhòngliàng","หนัก, น้ำหนัก"],
+["测量","cèliáng","สํารวจ, วัด"],
+["打量","dǎliang","พิจารณา, สํารวจ"],
+["分量","fènliang / fēnliàng","นํ้าหนัก, ปริมาณ, ส่วนประกอบ"],
+["含量","hánliàng","ปริมาณ"],
+["能量","néngliàng","พลังงาน, กำลัง"],
+["热量","rèliàng","แคลอรี่, ความร้อน, ปริมาณความร้อน"],
+["儿童","értóng","เด็ก, เยาวชน"],
+["重叠","chóngdié","ทับซ้อน, ซ้อนกัน"],
+["另外","lìngwài","นอกจากนี้, อีกอย่าง"],
+["毕业","bìyè","สําเร็จการศึกษา, จบการศึกษา"],
+["毕竟","bìjìng","ท้ายที่สุด, อย่างไรก็ตาม, ในที่สุด"],
+["尝","cháng","ชิม, ลิ้มรส"],
+["艰巨","jiānjù","ยากลำบาก, หนักหนาสาหัส"],
+["艰苦","jiānkǔ","ยากลำบาก, ลำบากมาก"],
+["艰难","jiānnán","ยากลำบาก, ลำบาก"],
+["营养","yíngyǎng","โภชนาการ, สารอาหาร"],
+["培养","péiyǎng","ฝึกฝน, เพาะปลูก, อบรม"],
+["饲养","sìyǎng","เลี้ยง, เพาะเลี้ยง"],
+["养成","yǎngchéng","ปลูกฝัง, สร้าง, ก่อให้เกิด"],
+["养料","yǎngliào","สารอาหาร, ปุ๋ย"],
+["营业","yíngyè","ดำเนินธุรกิจ, ค้าขาย"],
+["国营","guóyíng","รัฐวิสาหกิจ"],
+["经营","jīngyíng","ดำเนินกิจการ, บริหาร"]
+];
+
+/* อนุภาคทอง */
+(function(){const s=document.getElementById('stars');let h='';
+for(let i=0;i<34;i++){const l=Math.random()*100,d=9+Math.random()*13,dl=-Math.random()*20,sz=1+Math.random()*3;
+h+=`<i style="left:${l}%;width:${sz}px;height:${sz}px;animation-duration:${d}s;animation-delay:${dl}s"></i>`;}
+s.innerHTML=h;})();
+
+const ROMAN=["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
+let queue=[],known=[],unknown=[],i=0,round=1,total=0;
+
+const shuffle=a=>{for(let j=a.length-1;j>0;j--){const k=Math.random()*(j+1)|0;[a[j],a[k]]=[a[k],a[j]];}return a;};
+const $=id=>document.getElementById(id);
+
+function restart(){
+  queue=shuffle(DATA.slice());known=[];unknown=[];i=0;round=1;total=queue.length;
+  $('finish').classList.add('hide');$('study').classList.remove('hide');
+  window.scrollTo({top:0,behavior:'smooth'});render();
+}
+function render(){
+  if(i>=queue.length)return finish();
+  const c=queue[i];
+  $('card').classList.remove('flip');
+  setTimeout(()=>{$('pinyin').textContent=c[1];$('thai').textContent=c[2];
+    $('hanzi').textContent=c[0];$('hanziPy').textContent=c[1];},230);
+  $('count').textContent=(i+1)+" / "+queue.length;
+  $('round').textContent=ROMAN[round-1]||round;
+  $('bar').style.width=(i/queue.length*100)+"%";
+  $('sOk').textContent=known.length;$('sNo').textContent=unknown.length;
+  $('sLeft').textContent=queue.length-i;
+}
+function flip(){$('card').classList.toggle('flip');}
+function mark(ok){
+  const c=queue[i];
+  if(ok){if(!known.includes(c))known.push(c);unknown=unknown.filter(x=>x!==c);}
+  else{if(!unknown.includes(c))unknown.push(c);}
+  i++;render();
+}
+function rows(arr,cls){
+  if(!arr.length)return '<div class="empty">— ไม่มีรายการ —</div>';
+  return arr.map(c=>`<div class="row ${cls}">
+    <div><span class="zh">${c[0]}</span><span class="py">${c[1]}</span></div>
+    <div class="th">${c[2]}</div></div>`).join('');
+}
+function finish(){
+  $('study').classList.add('hide');
+  const f=$('finish');f.classList.remove('hide');
+  const pct=total?Math.round(known.length/total*100):0;
+  const grade = pct>=95?"IMPERIAL MASTERY 御級":pct>=80?"GOLDEN SCHOLAR 金榜":pct>=60?"RISING TALENT 進學":"KEEP FORGING 勤學";
+  f.innerHTML=`
+    <div class="crown">♛</div>
+    <h2>ROUND ${ROMAN[round-1]||round} COMPLETE</h2>
+    <div class="zh">功 成 圓 滿</div>
+    <div class="score">${pct}%<small> / ${known.length} จาก ${total} คำ</small></div>
+    <div class="grade">✦ ${grade} ✦</div>
+    <div class="sect"><h3 style="color:var(--no)">TO REVIEW · ต้องทบทวน (${unknown.length})</h3>
+      <div class="list">${rows(unknown,'bad')}</div></div>
+    <div class="sect"><h3 style="color:var(--ok)">MASTERED · จำได้แล้ว (${known.length})</h3>
+      <div class="list">${rows(known,'good')}</div></div>
+    <div class="actions">
+      <button class="btn no" onclick="reviewUnknown()" ${unknown.length?'':'disabled'}>Review Weak<small>ทบทวนเฉพาะที่จำไม่ได้</small></button>
+      <button class="btn ok" onclick="restart()">New Session<small>เริ่มใหม่ทั้งชุด</small></button>
+    </div>`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function reviewUnknown(){
+  queue=shuffle(unknown.slice());unknown=[];i=0;round++;
+  $('finish').classList.add('hide');$('study').classList.remove('hide');
+  window.scrollTo({top:0,behavior:'smooth'});render();
+}
+document.addEventListener('keydown',e=>{
+  if($('study').classList.contains('hide'))return;
+  if(e.code==='Space'){e.preventDefault();flip();}
+  if(e.key==='1')mark(false);
+  if(e.key==='2')mark(true);
+});
+restart();
+</script>
+</body>
+</html>
